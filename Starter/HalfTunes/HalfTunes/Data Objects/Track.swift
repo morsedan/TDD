@@ -1,4 +1,4 @@
-/// Copyright (c) 2018 Razeware LLC
+/// Copyright (c) 2019 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,31 +26,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-class Converter {
-    func convert(_ number: Int) -> String {
-        var result = ""
-        var localNumber = number
-        
-        let numberSymbols: [(number: Int, symbol: String)] = [(1000, "M"),
-                                                              (900, "CM"),
-                                                              (500, "D"),
-                                                              (400, "CD"),
-                                                              (100, "C"),
-                                                              (90, "XC"),
-                                                              (50, "L"),
-                                                              (40, "XL"),
-                                                              (10, "X"),
-                                                              (9, "IX"),
-                                                              (5, "V"),
-                                                              (4, "IV"),
-                                                              (1, "I")]
-        
-        for item in numberSymbols {
-            while localNumber >= item.number {
-                result += item.symbol
-                localNumber -= item.number
-            }
-        }
-        return result
-    }
+struct Track {
+  let name: String?
+  let artist: String?
+  let previewUrl: String?
+  
+  init(name: String?, artist: String?, previewUrl: String?) {
+    self.name = name
+    self.artist = artist
+    self.previewUrl = previewUrl
+  }
 }

@@ -1,4 +1,4 @@
-/// Copyright (c) 2018 Razeware LLC
+/// Copyright (c) 2019 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,31 +26,22 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-class Converter {
-    func convert(_ number: Int) -> String {
-        var result = ""
-        var localNumber = number
-        
-        let numberSymbols: [(number: Int, symbol: String)] = [(1000, "M"),
-                                                              (900, "CM"),
-                                                              (500, "D"),
-                                                              (400, "CD"),
-                                                              (100, "C"),
-                                                              (90, "XC"),
-                                                              (50, "L"),
-                                                              (40, "XL"),
-                                                              (10, "X"),
-                                                              (9, "IX"),
-                                                              (5, "V"),
-                                                              (4, "IV"),
-                                                              (1, "I")]
-        
-        for item in numberSymbols {
-            while localNumber >= item.number {
-                result += item.symbol
-                localNumber -= item.number
-            }
-        }
-        return result
-    }
+import Foundation
+
+class Download {
+  
+  /// the URL of the file to download. This also acts as a unique identifier for a Download
+  let url: String
+  /// wheter the download is ongoing or paused
+  var isDownloading = false
+  /// the fractional progress of the download; a float between 0.0 and 1.0
+  var progress: Float = 0.0
+  /// the URLSessionDownloadTask that downloads the file
+  var downloadTask: URLSessionDownloadTask?
+  /// stores the Data produces when you pause a download task. If the host server supports it, you can use this to resume a paused download in the future
+  var resumeData: Data?
+  
+  init(url: String) {
+    self.url = url
+  }
 }

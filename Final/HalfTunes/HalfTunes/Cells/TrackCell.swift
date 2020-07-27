@@ -1,4 +1,4 @@
-/// Copyright (c) 2018 Razeware LLC
+/// Copyright (c) 2019 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,31 +26,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-class Converter {
-    func convert(_ number: Int) -> String {
-        var result = ""
-        var localNumber = number
-        
-        let numberSymbols: [(number: Int, symbol: String)] = [(1000, "M"),
-                                                              (900, "CM"),
-                                                              (500, "D"),
-                                                              (400, "CD"),
-                                                              (100, "C"),
-                                                              (90, "XC"),
-                                                              (50, "L"),
-                                                              (40, "XL"),
-                                                              (10, "X"),
-                                                              (9, "IX"),
-                                                              (5, "V"),
-                                                              (4, "IV"),
-                                                              (1, "I")]
-        
-        for item in numberSymbols {
-            while localNumber >= item.number {
-                result += item.symbol
-                localNumber -= item.number
-            }
-        }
-        return result
+import UIKit
+
+protocol TrackCellDelegate {
+  func pauseTapped(_ cell: TrackCell)
+  func resumeTapped(_ cell: TrackCell)
+  func cancelTapped(_ cell: TrackCell)
+  func downloadTapped(_ cell: TrackCell)
+}
+
+class TrackCell: UITableViewCell {
+  var delegate: TrackCellDelegate?
+  
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var artistLabel: UILabel!
+  @IBOutlet weak var progressView: UIProgressView!
+  @IBOutlet weak var progressLabel: UILabel!
+  @IBOutlet weak var pauseButton: UIButton!
+  @IBOutlet weak var cancelButton: UIButton!
+  @IBOutlet weak var downloadButton: UIButton!
+  
+  @IBAction func pauseOrResumeTapped(_ sender: AnyObject) {
+    if pauseButton.titleLabel!.text == "Pause" {
+      delegate?.pauseTapped(self)
+    } else {
+      delegate?.resumeTapped(self)
     }
+  }
+  
+  @IBAction func cancelTapped(_ sender: AnyObject) {
+    delegate?.cancelTapped(self)
+  }
+  
+  @IBAction func downloadTapped(_ sender: AnyObject) {
+    delegate?.downloadTapped(self)
+  }
 }
